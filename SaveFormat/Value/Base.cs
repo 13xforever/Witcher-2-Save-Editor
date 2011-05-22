@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using System;
 
 namespace SaveFormat.Value
 {
-	[DebuggerDisplay("{value}")]
 	public abstract class Base
 	{
 		public PrimitiveType type;

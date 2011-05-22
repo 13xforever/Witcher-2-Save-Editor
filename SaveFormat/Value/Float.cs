@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace SaveFormat.Value
 {
+	[DebuggerDisplay("{value}")]
 	public class Float : Base
 	{
 		public Float(byte[] value)

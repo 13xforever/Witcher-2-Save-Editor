@@ -1,5 +1,8 @@
-﻿namespace SaveFormat.Value
+﻿using System.Diagnostics;
+
+namespace SaveFormat.Value
 {
+	[DebuggerDisplay("{value}")]
 	public class Uint8 : Base
 	{
 		public Uint8(byte[] value)

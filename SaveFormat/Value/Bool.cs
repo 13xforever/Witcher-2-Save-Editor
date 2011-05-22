@@ -1,5 +1,8 @@
-﻿namespace SaveFormat.Value
+﻿using System.Diagnostics;
+
+namespace SaveFormat.Value
 {
+	[DebuggerDisplay("{value}")]
 	public class Bool : Base
 	{
 		public Bool(byte[] value)

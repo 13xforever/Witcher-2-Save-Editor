@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace SaveFormat.Value
 {
+	[DebuggerDisplay("{value}")]
 	public class Uint : Base
 	{
 		public Uint(byte[] value)
