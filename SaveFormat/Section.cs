@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using SaveFormat.Node;
 
 namespace SaveFormat
 {
@@ -12,7 +13,7 @@ namespace SaveFormat
 		public string name;					//32 bytes
 		public int offset;					//4 bytes
 
-		public DataNode data;
+		public Blck data;
 
 		internal static IEnumerable<Section> Read(Stream stream)
 		{
@@ -42,7 +43,7 @@ namespace SaveFormat
 			{
 				case "BLCK":
 					{
-						data = BlckNode.Read(stream);
+						data = Blck.Read(stream);
 						break;
 					}
 				default:

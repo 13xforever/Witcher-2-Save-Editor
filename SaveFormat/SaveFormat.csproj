@@ -40,9 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PrimitiveData.cs" />
-    <Compile Include="SectionData.cs" />
+    <Compile Include="SectionNodes\AvalNode.cs" />
+    <Compile Include="SectionNodes\BlckNode.cs" />
+    <Compile Include="SectionNodes\KcupNode.cs" />
+    <Compile Include="SectionNodes\NodeType.cs" />
+    <Compile Include="SectionNodes\RotsNode.cs" />
+    <Compile Include="ValueNodes\AtUint8.cs" />
+    <Compile Include="ValueNodes\Bool.cs" />
+    <Compile Include="ValueNodes\CGuid.cs" />
+    <Compile Include="ValueNodes\Float.cs" />
+    <Compile Include="ValueNodes\GameTime.cs" />
+    <Compile Include="ValueNodes\PrimitiveData.cs" />
+    <Compile Include="SectionNodes\DataNode.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="ValueNodes\PrimitiveType.cs" />
+    <Compile Include="ValueNodes\String.cs" />
+    <Compile Include="ValueNodes\Uint.cs" />
+    <Compile Include="ValueNodes\Uint64.cs" />
+    <Compile Include="ValueNodes\Uint8.cs" />
+    <Compile Include="ValueNodes\UnknownValueType.cs" />
     <Compile Include="W2Save.cs" />
     <Compile Include="W2SaveReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

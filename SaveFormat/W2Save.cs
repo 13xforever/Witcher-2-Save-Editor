@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace SaveFormat
@@ -23,7 +24,7 @@ namespace SaveFormat
 			result.unknown1 = BitConverter.ToInt32(tmp, 0);
 			stream.Read(tmp, 0, 4);
 			result.unknown2 = BitConverter.ToInt32(tmp, 0);
-			result.section = new List<Section>(Section.Read(stream));
+			result.section = Section.Read(stream).ToList();
 
 			foreach (var sec in result.section)
 				sec.ReadData(stream);

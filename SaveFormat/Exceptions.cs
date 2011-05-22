@@ -8,8 +8,18 @@ namespace SaveFormat
 		{
 		}
 	}
+	public class UnknownValueTypeException : FormatException
+	{
+		public UnknownValueTypeException(string message):base(message)
+		{
+		}
+	}
 
-	public class UnknownBlckFlag : FormatException
+	public class UnknownNodeFlagException : FormatException
+	{
+	}
+	
+	public class UnknownValueFlagException : FormatException
 	{
 	}
 }
