@@ -32,5 +32,10 @@ namespace SaveFormat.Value
 
 		public string value;
 		public bool isUnicode;
+
+		public override string ToString()
+		{
+			return value;
+		}
 	}
 }

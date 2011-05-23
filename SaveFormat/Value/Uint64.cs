@@ -13,5 +13,10 @@ namespace SaveFormat.Value
 		}
 
 		public ulong value;
+
+		public override string ToString()
+		{
+			return value.ToString();
+		}
 	}
 }

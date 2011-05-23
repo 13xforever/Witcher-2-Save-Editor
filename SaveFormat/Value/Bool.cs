@@ -12,5 +12,10 @@ namespace SaveFormat.Value
 		}
 
 		public bool value;
+
+		public override string ToString()
+		{
+			return value.ToString();
+		}
 	}
 }

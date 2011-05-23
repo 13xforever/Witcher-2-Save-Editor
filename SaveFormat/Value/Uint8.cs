@@ -12,5 +12,10 @@ namespace SaveFormat.Value
 		}
 
 		public byte value;  //0E
+
+		public override string ToString()
+		{
+			return value.ToString();
+		}
 	}
 }

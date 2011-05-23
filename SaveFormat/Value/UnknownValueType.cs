@@ -13,5 +13,10 @@ namespace SaveFormat.Value
 
 		public byte[] value;
 		public string valueTypeName;
+
+		public override string ToString()
+		{
+			return valueTypeName;
+		}
 	}
 }

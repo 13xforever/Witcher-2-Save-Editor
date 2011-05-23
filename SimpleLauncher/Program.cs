@@ -10,7 +10,7 @@ namespace SimpleLauncher
 	{
 		static void Main(string[] args)
 		{
-			var save = W2SaveReader.Read(@"D:\Documents\Witcher 2\gamesaves\QuickSave.sav");
+			var save = W2SaveReader.Read(@"R:\Develop\Witcher2SaveEditor\Test\QuickSave.sav");
 			if (save.header != "SAVY") Console.WriteLine("Not a Witcher 2 save file.");
 			Console.WriteLine("done");
 			Console.ReadKey();

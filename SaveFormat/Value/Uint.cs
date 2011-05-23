@@ -15,5 +15,10 @@ namespace SaveFormat.Value
 		}
 
 		public uint value;
+
+		public override string ToString()
+		{
+			return value.ToString();
+		}
 	}
 }

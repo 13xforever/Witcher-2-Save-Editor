@@ -11,5 +11,10 @@ namespace SaveFormat.Value
 		}
 
 		public Guid value;
+
+		public override string ToString()
+		{
+			return value.ToString();
+		}
 	}
 }
