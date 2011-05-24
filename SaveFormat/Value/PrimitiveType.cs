@@ -3,14 +3,20 @@
 	public enum PrimitiveType
 	{
 		Unknown,
-		Uint,
-		AtUint8,
+		Int8,
+		Int16,
+		Int,
+		Int64,
 		Uint8,
+		Uint16,
+		Uint,
 		Uint64,
+		AtUint8,
 		String,
 		CGUID,
 		GameTime,
 		Bool,
 		Float,
+		SQuestLogPhaseStatus,
 	}
 }

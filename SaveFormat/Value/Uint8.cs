@@ -11,7 +11,7 @@ namespace SaveFormat.Value
 			this.value = value[0];
 		}
 
-		public byte value;  //0E
+		public byte value;
 
 		public override string ToString()
 		{

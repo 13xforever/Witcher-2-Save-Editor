@@ -53,9 +53,15 @@
     <Compile Include="Value\Base.cs" />
     <Compile Include="Node\Base.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="Value\Int.cs" />
+    <Compile Include="Value\Int16.cs" />
+    <Compile Include="Value\Int64.cs" />
+    <Compile Include="Value\Int8.cs" />
     <Compile Include="Value\PrimitiveType.cs" />
+    <Compile Include="Value\SQuestLogPhaseStatus.cs" />
     <Compile Include="Value\String.cs" />
     <Compile Include="Value\Uint.cs" />
+    <Compile Include="Value\Uint16.cs" />
     <Compile Include="Value\Uint64.cs" />
     <Compile Include="Value\Uint8.cs" />
     <Compile Include="Value\UnknownValueType.cs" />

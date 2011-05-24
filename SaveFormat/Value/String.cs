@@ -25,9 +25,9 @@ namespace SaveFormat.Value
 			if (value.Length - dataIndex != expectedLength)
 				throw new InvalidOperationException(string.Format("Expected string length is {0} byte(s), but there's {1} byte(s) of data", expectedLength, value.Length - dataIndex));
 			if (isUnicode)
-				Encoding.Unicode.GetString(value, dataIndex, value.Length - dataIndex);
+				this.value = Encoding.Unicode.GetString(value, dataIndex, value.Length - dataIndex);
 			else
-				Encoding.UTF8.GetString(value, dataIndex, value.Length - dataIndex);
+				this.value = Encoding.UTF8.GetString(value, dataIndex, value.Length - dataIndex);
 		}
 
 		public string value;
