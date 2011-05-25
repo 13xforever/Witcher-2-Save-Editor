@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dzip\FileEntry.cs" />
+    <Compile Include="StreamUtil.cs" />
+    <Compile Include="Dzip\W2Dzip.cs" />
     <Compile Include="SaveGame\Node\Aval.cs" />
     <Compile Include="SaveGame\Node\Blck.cs" />
     <Compile Include="SaveGame\Node\Kcup.cs" />

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using SaveFormat.Dzip;
 using SaveFormat.SaveGame;
 using SaveFormat.SaveGame.Node;
 using SaveFormat.SaveGame.Value;
@@ -12,7 +14,28 @@ namespace SimpleLauncher
 	{
 		static void Main(string[] args)
 		{
-			var save = W2SaveReader.Read(@"D:\Documents\Witcher 2\gamesaves\QuickSave.sav");
+			Unpack(@"D:\Games\1C-SoftClub\Ведьмак 2. Убийцы королей\CookedPC\alchemy_suit.dzip");
+
+			//ParseSave(@"D:\Documents\Witcher 2\gamesaves\QuickSave.sav");
+
+			Console.WriteLine("done");
+			Console.ReadKey();
+		}
+
+		private static void Unpack(string filename)
+		{
+			W2Dzip pack;
+			using (var stream = File.OpenRead(filename))
+			{
+				pack = W2Dzip.Read(stream);
+				var outPath = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename));
+				pack.UnpackAll(stream, outPath);
+			}
+		}
+
+		private static void ParseSave(string filename)
+		{
+			var save = W2SaveReader.Read(filename);
 			if (save.header != "SAVY") Console.WriteLine("Not a Witcher 2 save file.");
 
 			var questEntries = save.section.First(s => s.name == "questLogBlock").data.children;
@@ -22,9 +45,6 @@ namespace SimpleLauncher
 
 			var entry = questEntries.GetQuestLogBlock(trackedEntryId.value);
 			var phase = questEntries.GetQuestLogBlock(trackedPhaseId.value);
-
-			Console.WriteLine("done");
-			Console.ReadKey();
 		}
 
 		private static Aval FindValueByName(this IEnumerable<Base> sequence, string valueName)
