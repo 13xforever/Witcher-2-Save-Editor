@@ -42,20 +42,40 @@ namespace SaveFormat.Dzip
 
 		public void UnpackAll(Stream stream, string baseDirectory)
 		{
-			foreach (var entry in fileEntry)
+			var digits = (int) Math.Ceiling(Math.Log10(fileCount));
+			string mask = "{0,"+digits+"}/{1}: {2} ";
+			for (int i = 0; i < fileEntry.Count; i++)
 			{
-				stream.Seek(entry.offset, SeekOrigin.Begin);
-				var tmp = new byte[4];
-				stream.Read(tmp, 0, tmp.Length);
-				var localOffset = BitConverter.ToInt32(tmp, 0);
-				stream.Seek(entry.offset + localOffset, SeekOrigin.Begin);
+				var entry = fileEntry[i];
+				Console.Write(mask, i+1, fileCount, entry.filename);
+				try
+				{
+					stream.Seek(entry.offset, SeekOrigin.Begin);
+					var tmp = new byte[4];
+					stream.Read(tmp, 0, tmp.Length);
+					var localOffset = BitConverter.ToInt32(tmp, 0);
+					stream.Seek(entry.offset + localOffset, SeekOrigin.Begin);
 
-				var outFilename = Path.Combine(baseDirectory, entry.filename);
-				var outDirectory = Path.GetDirectoryName(outFilename);
-				if (!Directory.Exists(outDirectory))
-					Directory.CreateDirectory(outDirectory);
-				using (var outStream = File.OpenWrite(outFilename))
-					stream.CopyTo(outStream, entry.length-localOffset);
+					var outFilename = Path.Combine(baseDirectory, entry.filename);
+					var outDirectory = Path.GetDirectoryName(outFilename);
+					if (!Directory.Exists(outDirectory))
+						Directory.CreateDirectory(outDirectory);
+					using (var outStream = File.OpenWrite(outFilename))
+						stream.CopyTo(outStream, entry.length - localOffset);
+
+					var c = Console.ForegroundColor;
+					Console.ForegroundColor = ConsoleColor.Green;
+					Console.WriteLine("ok");
+					Console.ForegroundColor = c;
+				}
+				catch (Exception e)
+				{
+					var c = Console.ForegroundColor;
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.WriteLine("failed: " + e.Message);
+					Console.ForegroundColor = c;
+				}
+
 			}
 		}
 	}

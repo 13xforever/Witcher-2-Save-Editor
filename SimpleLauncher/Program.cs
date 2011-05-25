@@ -14,7 +14,7 @@ namespace SimpleLauncher
 	{
 		static void Main(string[] args)
 		{
-			Unpack(@"D:\Games\1C-SoftClub\Ведьмак 2. Убийцы королей\CookedPC\alchemy_suit.dzip");
+			Unpack(@"D:\Games\1C-SoftClub\Ведьмак 2. Убийцы королей\CookedPC\troll.dzip");
 
 			//ParseSave(@"D:\Documents\Witcher 2\gamesaves\QuickSave.sav");
 
