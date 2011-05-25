@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
-namespace SaveFormat
+namespace SaveFormat.SaveGame
 {
 	public static class W2SaveReader
 	{

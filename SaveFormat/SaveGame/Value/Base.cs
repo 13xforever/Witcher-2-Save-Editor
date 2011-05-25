@@ -2,7 +2,7 @@
 using System.Text;
 using System;
 
-namespace SaveFormat.Value
+namespace SaveFormat.SaveGame.Value
 {
 	public abstract class Base
 	{

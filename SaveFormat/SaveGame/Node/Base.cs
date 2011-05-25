@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace SaveFormat.Node
+namespace SaveFormat.SaveGame.Node
 {
 	[DebuggerDisplay("{name}")]
 	public abstract class Base

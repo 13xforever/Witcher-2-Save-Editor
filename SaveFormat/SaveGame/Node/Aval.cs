@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace SaveFormat.Node
+namespace SaveFormat.SaveGame.Node
 {
 	[DebuggerDisplay("{value}", Name="{name}")]
 	public class Aval: Base

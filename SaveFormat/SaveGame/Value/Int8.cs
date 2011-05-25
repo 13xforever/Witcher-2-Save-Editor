@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace SaveFormat.Value
+namespace SaveFormat.SaveGame.Value
 {
 	[DebuggerDisplay("{value}")]
 	public class Int8 : Base

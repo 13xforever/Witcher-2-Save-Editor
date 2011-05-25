@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace SaveFormat.Value
+namespace SaveFormat.SaveGame.Value
 {
 	[DebuggerDisplay("{value}", Name="{valueTypeName}")]
 	public class UnknownValueType : Base

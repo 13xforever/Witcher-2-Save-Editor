@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SaveFormat.Value
+namespace SaveFormat.SaveGame.Value
 {
 	public class CGuid : Base
 	{

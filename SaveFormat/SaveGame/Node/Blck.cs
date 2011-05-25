@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SaveFormat.Node
+namespace SaveFormat.SaveGame.Node
 {
 	public class Blck: Base
 	{

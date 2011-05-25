@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SaveFormat.Value
+namespace SaveFormat.SaveGame.Value
 {
 	[DebuggerDisplay("{value}")]
 	public class SQuestLogPhaseStatus : Base
@@ -15,10 +14,12 @@ namespace SaveFormat.Value
 			type = PrimitiveType.SQuestLogPhaseStatus;
 
 			using (var stream = new MemoryStream(value))
-				this.value = ReadAllValues(stream).ToList();
+				this.value = ReadAllValues(stream).ToDictionary(kvp => kvp.Key, kvp=>kvp.Value);
+				//this.value = ReadAllValues(stream).ToList();
 		}
 
-		public List<KeyValuePair<string, Base>> value;
+		public Dictionary<string, Base> value;
+		//public List<KeyValuePair<string, Base>> value;
 
 		private static IEnumerable<KeyValuePair<string, Base>> ReadAllValues(Stream stream)
 		{

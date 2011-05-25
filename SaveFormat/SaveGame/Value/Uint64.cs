@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace SaveFormat.Value
+namespace SaveFormat.SaveGame.Value
 {
 	[DebuggerDisplay("{value}")]
 	public class Uint64 : Base

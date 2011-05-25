@@ -1,4 +1,4 @@
-﻿namespace SaveFormat.Value
+﻿namespace SaveFormat.SaveGame.Value
 {
 	public class GameTime : Base
 	{

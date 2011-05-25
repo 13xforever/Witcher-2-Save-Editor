@@ -1,4 +1,4 @@
-﻿namespace SaveFormat.Node
+﻿namespace SaveFormat.SaveGame.Node
 {
 	public enum NodeType
 	{

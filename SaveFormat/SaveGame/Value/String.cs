@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace SaveFormat.Value
+namespace SaveFormat.SaveGame.Value
 {
 	[DebuggerDisplay("{value}")]
 	public class String : Base

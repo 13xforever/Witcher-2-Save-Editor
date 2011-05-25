@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using SaveFormat.Node;
+using SaveFormat.SaveGame.Node;
 
-namespace SaveFormat
+namespace SaveFormat.SaveGame
 {
 	[DebuggerDisplay("{name}")]
 	public class Section				//36 bytes total

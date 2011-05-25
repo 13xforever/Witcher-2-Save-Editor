@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Witcher2SaveEditor", "Witcher2SaveEditor\Witcher2SaveEditor.csproj", "{DD6774A9-4281-470F-98A1-BFC3A2BBF7BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaveFormat", "SaveFormat\SaveFormat.csproj", "{F9D96296-C448-4A95-80D5-03AD1295C751}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formats", "SaveFormat\Formats.csproj", "{F9D96296-C448-4A95-80D5-03AD1295C751}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLauncher", "SimpleLauncher\SimpleLauncher.csproj", "{72123EEF-8100-4A77-8BFC-A4BB27FBA323}"
 EndProject

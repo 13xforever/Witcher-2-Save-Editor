@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SaveFormat
+namespace SaveFormat.SaveGame
 {
 	public class W2Save
 	{

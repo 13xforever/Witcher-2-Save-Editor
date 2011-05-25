@@ -47,9 +47,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SaveFormat\SaveFormat.csproj">
+    <ProjectReference Include="..\SaveFormat\Formats.csproj">
       <Project>{F9D96296-C448-4A95-80D5-03AD1295C751}</Project>
-      <Name>SaveFormat</Name>
+      <Name>Formats</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
