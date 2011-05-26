@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime;
-using System.Text;
 
 namespace SaveFormat.Dzip
 {
@@ -20,25 +19,21 @@ namespace SaveFormat.Dzip
 
 		public static W2Dzip Read(Stream stream)
 		{
-			stream.Seek(0, SeekOrigin.Begin);
-
+			// ReSharper disable UseObjectOrCollectionInitializer
 			var result = new W2Dzip();
-			var tmp = new byte[4];
-			stream.FillInBuffer(tmp);
-			result.header = Encoding.UTF8.GetString(tmp);
-			stream.FillInBuffer(tmp);
-			result.version = BitConverter.ToInt32(tmp, 0);
-			stream.FillInBuffer(tmp);
-			result.fileCount = BitConverter.ToInt32(tmp, 0);
-			stream.FillInBuffer(tmp);
-			result.userId = BitConverter.ToInt32(tmp, 0);
-			tmp = new byte[8];
-			stream.FillInBuffer(tmp);
-			result.metaOffset = BitConverter.ToInt64(tmp, 0);
-			stream.FillInBuffer(tmp);
-			result.unknown = BitConverter.ToInt64(tmp, 0);
+			// ReSharper restore UseObjectOrCollectionInitializer
+
+			stream.Seek(0, SeekOrigin.Begin);
+			result.header = stream.ReadUtf8String(4);
+			result.version = stream.ReadInt32();
+			result.fileCount = stream.ReadInt32();
+			result.userId = stream.ReadInt32();
+			result.metaOffset = stream.ReadInt64();
+			result.unknown = stream.ReadInt64();
+
 			stream.Seek(result.metaOffset, SeekOrigin.Begin);
 			result.fileEntry = FileEntry.Read(stream, result.fileCount, out result.estimatedMaximumBufferSize);
+
 			return result;
 		}
 
@@ -65,9 +60,7 @@ namespace SaveFormat.Dzip
 				try
 				{
 					stream.Seek(entry.offset, SeekOrigin.Begin);
-					var tmp = new byte[4];
-					stream.FillInBuffer(tmp);
-					var localOffset = BitConverter.ToInt32(tmp, 0);
+					var localOffset = stream.ReadInt32();
 					stream.Seek(entry.offset + localOffset, SeekOrigin.Begin);
 
 					var outFilename = Path.Combine(baseDirectory, entry.filename);
@@ -75,9 +68,8 @@ namespace SaveFormat.Dzip
 					if (!Directory.Exists(outDirectory))
 						Directory.CreateDirectory(outDirectory);
 
-					var input = new byte[entry.compressedLength - localOffset];
+					var input = stream.ReadBytes((int) (entry.compressedLength - localOffset));
 					var output = new byte[entry.decompressedLength];
-					stream.FillInBuffer(input);
 					LZF.Decompress(input, input.Length, output, output.Length);
 					using (var outStream = File.OpenWrite(outFilename))
 						outStream.Write(output, 0, output.Length);

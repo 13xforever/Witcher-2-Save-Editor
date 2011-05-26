@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace SaveFormat
 {
@@ -36,6 +37,67 @@ namespace SaveFormat
 		public static int FillInBuffer(this Stream stream, byte[] buffer)
 		{
 			return stream.FillInBuffer(buffer, buffer.Length);
+		}
+
+		public static sbyte ReadInt8(this Stream stream)
+		{
+			return (sbyte) stream.ReadByte();
+		}
+	
+		public static ushort ReadUInt16(this Stream stream)
+		{
+			var tmp = new byte[2];
+			stream.FillInBuffer(tmp);
+			return BitConverter.ToUInt16(tmp, 0);
+		}
+	
+		public static short ReadInt16(this Stream stream)
+		{
+			var tmp = new byte[2];
+			stream.FillInBuffer(tmp);
+			return BitConverter.ToInt16(tmp, 0);
+		}
+
+		public static uint ReadUInt32(this Stream stream)
+		{
+			var tmp = new byte[4];
+			stream.FillInBuffer(tmp);
+			return BitConverter.ToUInt32(tmp, 0);
+		}
+
+		public static int ReadInt32(this Stream stream)
+		{
+			var tmp = new byte[4];
+			stream.FillInBuffer(tmp);
+			return BitConverter.ToInt32(tmp, 0);
+		}
+
+		public static ulong ReadUInt64(this Stream stream)
+		{
+			var tmp = new byte[8];
+			stream.FillInBuffer(tmp);
+			return BitConverter.ToUInt64(tmp, 0);
+		}
+
+		public static long ReadInt64(this Stream stream)
+		{
+			var tmp = new byte[8];
+			stream.FillInBuffer(tmp);
+			return BitConverter.ToInt64(tmp, 0);
+		}
+
+		public static byte[] ReadBytes(this Stream stream, int length)
+		{
+			var tmp = new byte[length];
+			stream.FillInBuffer(tmp);
+			return tmp;
+		}
+	
+		public static string ReadUtf8String(this Stream stream, int length)
+		{
+			var tmp = new byte[length];
+			stream.FillInBuffer(tmp);
+			return Encoding.UTF8.GetString(tmp);
 		}
 	}
 }

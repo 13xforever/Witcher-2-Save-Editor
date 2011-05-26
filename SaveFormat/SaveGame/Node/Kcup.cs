@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace SaveFormat.SaveGame.Node
 {
@@ -17,9 +16,7 @@ namespace SaveFormat.SaveGame.Node
 		public static Kcup Read(Stream stream)
 		{
 			var result = new Kcup();
-			var tmp = new byte[4];
-			stream.FillInBuffer(tmp);
-			string magicString = Encoding.UTF8.GetString(tmp);
+			string magicString = stream.ReadUtf8String(4);
 			if (magicString != "STOR")
 				throw new InvalidOperationException("Unknown token for KCUP node: "+magicString);
 			result.data = Aval.Read(stream).First();

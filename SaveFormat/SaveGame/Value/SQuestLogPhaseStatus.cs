@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace SaveFormat.SaveGame.Value
 {
@@ -29,10 +28,7 @@ namespace SaveFormat.SaveGame.Value
 				bool f = (b & 0x80) == 0x80;
 				if (!f) throw new UnknownNodeFlagException();
 
-				var length = b & 0x7f;
-				var tmp = new byte[length];
-				stream.FillInBuffer(tmp);
-				var fieldName = Encoding.UTF8.GetString(tmp);
+				var fieldName = stream.ReadUtf8String(b & 0x7f);
 
 				yield return new KeyValuePair<string, Base>(fieldName,Read(stream));
 			}

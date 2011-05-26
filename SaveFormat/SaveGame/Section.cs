@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using SaveFormat.SaveGame.Node;
 
 namespace SaveFormat.SaveGame
 {
 	[DebuggerDisplay("{name}")]
-	public class Section				//36 bytes total
+	public class Section
 	{
-		public string name;					//32 bytes
-		public int offset;					//4 bytes
+		public string name;
+		public int offset;
 
 		public Blck data;
 
@@ -19,15 +17,13 @@ namespace SaveFormat.SaveGame
 		{
 			for (var i = 0; i < 32; i++)
 			{
+				// ReSharper disable UseObjectOrCollectionInitializer
 				var result = new Section();
-				var tmp = new byte[32];
-				stream.FillInBuffer(tmp);
-				result.name = Encoding.UTF8.GetString(tmp).TrimEnd(char.MinValue);
+				// ReSharper restore UseObjectOrCollectionInitializer
+				result.name = stream.ReadUtf8String(32).TrimEnd(char.MinValue);
 				if (string.IsNullOrEmpty(result.name)) yield break;
 
-				tmp = new byte[4];
-				stream.FillInBuffer(tmp);
-				result.offset = BitConverter.ToInt32(tmp, 0);
+				result.offset = stream.ReadInt32();
 				yield return result;
 			}
 		}
@@ -36,9 +32,7 @@ namespace SaveFormat.SaveGame
 		{
 			stream.Seek(offset, SeekOrigin.Begin);
 
-			var tmp = new byte[4];
-			stream.FillInBuffer(tmp);
-			string nodeType = Encoding.UTF8.GetString(tmp);
+			string nodeType = stream.ReadUtf8String(4);
 			switch (nodeType)
 			{
 				case "BLCK":

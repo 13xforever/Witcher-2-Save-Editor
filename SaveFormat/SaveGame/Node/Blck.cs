@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace SaveFormat.SaveGame.Node
 {
@@ -24,15 +22,10 @@ namespace SaveFormat.SaveGame.Node
 			if (!result.unknown) throw new UnknownNodeFlagException();
 
 			result.nameLength = (short)(b & 0x7f);
-			var tmp = new byte[result.nameLength];
-			stream.FillInBuffer(tmp);
-			result.name = Encoding.UTF8.GetString(tmp);
-			tmp = new byte[4];
-			stream.FillInBuffer(tmp);
-			result.length = BitConverter.ToInt32(tmp, 0);
-			tmp = new byte[result.length];
-			stream.FillInBuffer(tmp);
-			using (var memStream = new MemoryStream(tmp))
+			result.name = stream.ReadUtf8String(result.nameLength);
+
+			result.length = stream.ReadInt32();
+			using (var memStream = new MemoryStream(stream.ReadBytes(result.length)))
 				result.children = Aval.Read(memStream).ToList();
 
 			return result;

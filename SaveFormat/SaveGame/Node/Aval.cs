@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 
 namespace SaveFormat.SaveGame.Node
 {
@@ -19,9 +18,7 @@ namespace SaveFormat.SaveGame.Node
 		{
 			while(stream.Position<stream.Length)
 			{
-				var tmp = new byte[4];
-				stream.FillInBuffer(tmp);
-				var nodeType = Encoding.UTF8.GetString(tmp);
+				var nodeType = stream.ReadUtf8String(4);
 				switch (nodeType)
 				{
 					case "AVAL":
@@ -32,9 +29,7 @@ namespace SaveFormat.SaveGame.Node
 							if (!result.unknown) throw new UnknownNodeFlagException();
 
 							result.nameLength = (short)(b & 0x7f);
-							tmp = new byte[result.nameLength];
-							stream.FillInBuffer(tmp);
-							result.name = Encoding.UTF8.GetString(tmp);
+							result.name = stream.ReadUtf8String(result.nameLength);
 							result.value = Value.Base.Read(stream);
 
 							yield return result;

@@ -15,22 +15,16 @@ namespace SaveFormat.SaveGame.Value
 			bool f = (b & 0x80) == 0x80;
 			if (!f) throw new UnknownValueFlagException();
 
-			var length = b & 0x7f;
-			var tmp = new byte[length];
-			stream.FillInBuffer(tmp);
-			var valueType = Encoding.UTF8.GetString(tmp);
-			tmp = new byte[4];
+			var valueType = stream.ReadUtf8String(b & 0x7f);
+			var tmp = new byte[4];
 			stream.FillInBuffer(tmp, 2);
 			int valueLength = BitConverter.ToUInt16(tmp, 0);
 
 			if (valueLength == 0xffff)
-			{
-				stream.FillInBuffer(tmp);
-				valueLength = BitConverter.ToInt32(tmp, 0) - 4;
-			}
+				valueLength = stream.ReadInt32() - 4; //todo: shouldn't it be 6???
 			else
 			{
-				stream.FillInBuffer(tmp, 2, tmp.Length-2);
+				stream.FillInBuffer(tmp, 2, tmp.Length - 2);
 				valueLength = BitConverter.ToInt32(tmp, 0);
 			}
 

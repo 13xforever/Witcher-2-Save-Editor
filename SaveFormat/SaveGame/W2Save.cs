@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace SaveFormat.SaveGame
 {
@@ -15,15 +13,12 @@ namespace SaveFormat.SaveGame
 
 		internal static W2Save Read(Stream stream)
 		{
+			// ReSharper disable UseObjectOrCollectionInitializer
 			var result = new W2Save();
-			var tmp = new byte[4];
-			stream.FillInBuffer(tmp);
-			result.header = Encoding.UTF8.GetString(tmp).TrimEnd(char.MinValue);
-			tmp = new byte[4];
-			stream.FillInBuffer(tmp);
-			result.unknown1 = BitConverter.ToInt32(tmp, 0);
-			stream.FillInBuffer(tmp);
-			result.unknown2 = BitConverter.ToInt32(tmp, 0);
+			// ReSharper restore UseObjectOrCollectionInitializer
+			result.header = stream.ReadUtf8String(4);
+			result.unknown1 = stream.ReadInt32();
+			result.unknown2 = stream.ReadInt32();
 			result.section = Section.Read(stream).ToList();
 
 			foreach (var sec in result.section)
