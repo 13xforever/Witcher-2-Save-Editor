@@ -31,7 +31,7 @@ namespace SaveFormat.SaveGame.Value
 
 				var length = b & 0x7f;
 				var tmp = new byte[length];
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				var fieldName = Encoding.UTF8.GetString(tmp);
 
 				yield return new KeyValuePair<string, Base>(fieldName,Read(stream));

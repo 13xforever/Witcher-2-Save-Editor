@@ -21,18 +21,18 @@ namespace SaveFormat.Dzip
 
 			var result = new W2Dzip();
 			var tmp = new byte[4];
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			result.header = Encoding.UTF8.GetString(tmp);
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			result.version = BitConverter.ToInt32(tmp, 0);
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			result.fileCount = BitConverter.ToInt32(tmp, 0);
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			result.userId = BitConverter.ToInt32(tmp, 0);
 			tmp = new byte[8];
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			result.metaOffset = BitConverter.ToInt64(tmp, 0);
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			result.unknown = BitConverter.ToInt64(tmp, 0);
 			stream.Seek(result.metaOffset, SeekOrigin.Begin);
 			result.fileEntry = FileEntry.Read(stream, result.fileCount);
@@ -51,7 +51,7 @@ namespace SaveFormat.Dzip
 				{
 					stream.Seek(entry.offset, SeekOrigin.Begin);
 					var tmp = new byte[4];
-					stream.Read(tmp, 0, tmp.Length);
+					stream.FillInBuffer(tmp);
 					var localOffset = BitConverter.ToInt32(tmp, 0);
 					stream.Seek(entry.offset + localOffset, SeekOrigin.Begin);
 

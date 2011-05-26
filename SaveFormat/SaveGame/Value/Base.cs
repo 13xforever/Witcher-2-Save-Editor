@@ -17,25 +17,25 @@ namespace SaveFormat.SaveGame.Value
 
 			var length = b & 0x7f;
 			var tmp = new byte[length];
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			var valueType = Encoding.UTF8.GetString(tmp);
 			tmp = new byte[4];
-			stream.Read(tmp, 0, 2);
+			stream.FillInBuffer(tmp, 2);
 			int valueLength = BitConverter.ToUInt16(tmp, 0);
 
 			if (valueLength == 0xffff)
 			{
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				valueLength = BitConverter.ToInt32(tmp, 0) - 4;
 			}
 			else
 			{
-				stream.Read(tmp, 2, tmp.Length-2);
+				stream.FillInBuffer(tmp, 2, tmp.Length-2);
 				valueLength = BitConverter.ToInt32(tmp, 0);
 			}
 
 			tmp = new byte[valueLength];
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 
 			switch (valueType)
 			{

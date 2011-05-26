@@ -17,12 +17,12 @@ namespace SaveFormat.SaveGame
 		{
 			var result = new W2Save();
 			var tmp = new byte[4];
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			result.header = Encoding.UTF8.GetString(tmp).TrimEnd(char.MinValue);
 			tmp = new byte[4];
-			stream.Read(tmp, 0, 4);
+			stream.FillInBuffer(tmp);
 			result.unknown1 = BitConverter.ToInt32(tmp, 0);
-			stream.Read(tmp, 0, 4);
+			stream.FillInBuffer(tmp);
 			result.unknown2 = BitConverter.ToInt32(tmp, 0);
 			result.section = Section.Read(stream).ToList();
 

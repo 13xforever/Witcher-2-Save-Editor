@@ -25,13 +25,13 @@ namespace SaveFormat.SaveGame.Node
 
 			result.nameLength = (short)(b & 0x7f);
 			var tmp = new byte[result.nameLength];
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			result.name = Encoding.UTF8.GetString(tmp);
 			tmp = new byte[4];
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			result.length = BitConverter.ToInt32(tmp, 0);
 			tmp = new byte[result.length];
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			using (var memStream = new MemoryStream(tmp))
 				result.children = Aval.Read(memStream).ToList();
 

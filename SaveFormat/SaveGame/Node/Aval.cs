@@ -20,7 +20,7 @@ namespace SaveFormat.SaveGame.Node
 			while(stream.Position<stream.Length)
 			{
 				var tmp = new byte[4];
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				var nodeType = Encoding.UTF8.GetString(tmp);
 				switch (nodeType)
 				{
@@ -33,7 +33,7 @@ namespace SaveFormat.SaveGame.Node
 
 							result.nameLength = (short)(b & 0x7f);
 							tmp = new byte[result.nameLength];
-							stream.Read(tmp, 0, tmp.Length);
+							stream.FillInBuffer(tmp);
 							result.name = Encoding.UTF8.GetString(tmp);
 							result.value = Value.Base.Read(stream);
 

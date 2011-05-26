@@ -17,5 +17,25 @@ namespace SaveFormat
 			}
 		}
 
+		public static int FillInBuffer(this Stream stream, byte[] buffer, int offset, int length)
+		{
+			int bytesRead, totalRead = 0;
+			while ((bytesRead = stream.Read(buffer, offset + totalRead, length - totalRead)) > 0)
+				totalRead += bytesRead;
+			return totalRead;
+		}
+	
+		public static int FillInBuffer(this Stream stream, byte[] buffer, int length)
+		{
+			int bytesRead, totalRead = 0;
+			while ((bytesRead = stream.Read(buffer, totalRead, length - totalRead)) > 0)
+				totalRead += bytesRead;
+			return totalRead;
+		}
+	
+		public static int FillInBuffer(this Stream stream, byte[] buffer)
+		{
+			return stream.FillInBuffer(buffer, buffer.Length);
+		}
 	}
 }

@@ -21,19 +21,19 @@ namespace SaveFormat.Dzip
 			{
 				var entry = new FileEntry();
 				var tmp = new byte[2];
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				var filenameLength = BitConverter.ToInt16(tmp, 0);
 				tmp = new byte[filenameLength];
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				entry.filename = Encoding.UTF8.GetString(tmp).TrimEnd(char.MinValue);
 				tmp = new byte[8];
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				entry.unknown = BitConverter.ToInt64(tmp, 0);
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				entry.decompressedLength = BitConverter.ToInt64(tmp, 0);
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				entry.offset = BitConverter.ToInt64(tmp, 0);
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				entry.compressedLength = BitConverter.ToInt64(tmp, 0);
 				result.Add(entry);
 			}

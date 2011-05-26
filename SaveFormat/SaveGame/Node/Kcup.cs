@@ -18,7 +18,7 @@ namespace SaveFormat.SaveGame.Node
 		{
 			var result = new Kcup();
 			var tmp = new byte[4];
-			stream.Read(tmp, 0, tmp.Length);
+			stream.FillInBuffer(tmp);
 			string magicString = Encoding.UTF8.GetString(tmp);
 			if (magicString != "STOR")
 				throw new InvalidOperationException("Unknown token for KCUP node: "+magicString);

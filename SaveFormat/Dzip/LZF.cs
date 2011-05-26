@@ -318,7 +318,7 @@ namespace SaveFormat.Dzip
 						throw new InvalidOperationException("LZF decompression error E2BIG.");
 
 					var tmp = new byte[ctrl];
-					input.Read(tmp, 0, tmp.Length);
+					input.FillInBuffer(tmp);
 					readBytes += ctrl;
 					output.Write(tmp, 0, tmp.Length);
 					writtenBytes += ctrl;
@@ -354,7 +354,7 @@ namespace SaveFormat.Dzip
 					 * we have to have 'abcdefdefdefd' in the end.
 					 */
 					var tmp = new byte[Math.Min(currentPosition - reference, patternLength)];
-					var read = output.Read(tmp, 0, tmp.Length);
+					var read = output.FillInBuffer(tmp);
 					if (read != tmp.Length)
 						throw new InvalidOperationException(string.Format("Expected {0} bytes to be read, but was {1}", tmp.Length, read));
 					output.Seek(currentPosition, SeekOrigin.Begin);

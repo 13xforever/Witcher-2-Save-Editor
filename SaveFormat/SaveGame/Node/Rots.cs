@@ -14,7 +14,7 @@ namespace SaveFormat.SaveGame.Node
 		public static Rots Read(Stream stream)
 		{
 			var result = new Rots();
-			stream.Read(result.data, 0, result.data.Length);
+			stream.FillInBuffer(result.data);
 			return result;
 		}
 	}

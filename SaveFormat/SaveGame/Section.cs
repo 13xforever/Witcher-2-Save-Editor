@@ -21,12 +21,12 @@ namespace SaveFormat.SaveGame
 			{
 				var result = new Section();
 				var tmp = new byte[32];
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				result.name = Encoding.UTF8.GetString(tmp).TrimEnd(char.MinValue);
 				if (string.IsNullOrEmpty(result.name)) yield break;
 
 				tmp = new byte[4];
-				stream.Read(tmp, 0, tmp.Length);
+				stream.FillInBuffer(tmp);
 				result.offset = BitConverter.ToInt32(tmp, 0);
 				yield return result;
 			}
@@ -37,7 +37,7 @@ namespace SaveFormat.SaveGame
 			stream.Seek(offset, SeekOrigin.Begin);
 
 			var tmp = new byte[4];
-			stream.Read(tmp, 0, 4);
+			stream.FillInBuffer(tmp);
 			string nodeType = Encoding.UTF8.GetString(tmp);
 			switch (nodeType)
 			{
