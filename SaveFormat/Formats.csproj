@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dzip\FileEntry.cs" />
+    <Compile Include="Dzip\LZF.cs" />
     <Compile Include="StreamUtil.cs" />
     <Compile Include="Dzip\W2Dzip.cs" />
     <Compile Include="SaveGame\Node\Aval.cs" />
