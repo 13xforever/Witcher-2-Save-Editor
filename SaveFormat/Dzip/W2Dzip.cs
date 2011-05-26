@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime;
 using System.Text;
 
 namespace SaveFormat.Dzip
@@ -14,6 +15,8 @@ namespace SaveFormat.Dzip
 		public long metaOffset;
 		public long unknown;
 		public List<FileEntry> fileEntry;
+
+		private long estimatedMaximumBufferSize;
 
 		public static W2Dzip Read(Stream stream)
 		{
@@ -35,18 +38,30 @@ namespace SaveFormat.Dzip
 			stream.FillInBuffer(tmp);
 			result.unknown = BitConverter.ToInt64(tmp, 0);
 			stream.Seek(result.metaOffset, SeekOrigin.Begin);
-			result.fileEntry = FileEntry.Read(stream, result.fileCount);
+			result.fileEntry = FileEntry.Read(stream, result.fileCount, out result.estimatedMaximumBufferSize);
 			return result;
 		}
 
 		public void UnpackAll(Stream stream, string baseDirectory)
 		{
+			int memoryGateSize = (int)((GC.GetTotalMemory(false) + estimatedMaximumBufferSize) / (1024*1024)) + 1;
+			Log.Write("Checking if we have {0} MB of RAM available... ", memoryGateSize);
+			try
+			{
+				new MemoryFailPoint(memoryGateSize);
+				Log.Success("ok");
+			}
+			catch(InsufficientMemoryException)
+			{
+				Log.Warning("failed. There might be errors.");
+			}
+
 			var digits = (int) Math.Ceiling(Math.Log10(fileCount));
 			string mask = "{0,"+digits+"}/{1}: {2} ";
 			for (int i = 0; i < fileEntry.Count; i++)
 			{
 				var entry = fileEntry[i];
-				Console.Write(mask, i+1, fileCount, entry.filename);
+				Log.Write(mask, i+1, fileCount, entry.filename);
 				try
 				{
 					stream.Seek(entry.offset, SeekOrigin.Begin);
@@ -60,21 +75,19 @@ namespace SaveFormat.Dzip
 					if (!Directory.Exists(outDirectory))
 						Directory.CreateDirectory(outDirectory);
 
-					using (var outStream = File.Open(outFilename, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
-						stream.Decompress(outStream, entry.compressedLength - localOffset, entry.decompressedLength);
+					using (var memStream = new MemoryStream((int)entry.decompressedLength))
+					{
+						stream.Decompress(memStream, entry.compressedLength - localOffset, entry.decompressedLength);
+						memStream.Seek(0, SeekOrigin.Begin);
+						using (var outStream = File.OpenWrite(outFilename))
+							memStream.CopyTo(outStream);
+					}
 
-
-					var c = Console.ForegroundColor;
-					Console.ForegroundColor = ConsoleColor.Green;
-					Console.WriteLine("ok");
-					Console.ForegroundColor = c;
+					Log.Success("ok");
 				}
 				catch (Exception e)
 				{
-					var c = Console.ForegroundColor;
-					Console.ForegroundColor = ConsoleColor.Red;
-					Console.WriteLine("failed: " + e.Message);
-					Console.ForegroundColor = c;
+					Log.Error("failed: " + e.Message);
 				}
 
 			}

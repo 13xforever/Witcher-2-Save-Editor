@@ -14,7 +14,7 @@ namespace SimpleLauncher
 	{
 		static void Main(string[] args)
 		{
-			Unpack(@"R:\Develop\Witcher2SaveEditor\Test\succubuss.dzip");
+			Unpack(@"D:\Games\1C-SoftClub\Ведьмак 2. Убийцы королей\CookedPC\pack0.dzip");
 
 			//ParseSave(@"D:\Documents\Witcher 2\gamesaves\QuickSave.sav");
 

@@ -14,8 +14,9 @@ namespace SaveFormat.Dzip
 		public long compressedLength;
 
 
-		public static List<FileEntry> Read(Stream stream, int count)
+		public static List<FileEntry> Read(Stream stream, int count, out long memoryGate)
 		{
+			memoryGate = 0;
 			var result = new List<FileEntry>(count);
 			for (var i=0;i<count;i++)
 			{
@@ -36,6 +37,8 @@ namespace SaveFormat.Dzip
 				stream.FillInBuffer(tmp);
 				entry.compressedLength = BitConverter.ToInt64(tmp, 0);
 				result.Add(entry);
+				var estimatedBufferSize = entry.compressedLength + entry.decompressedLength;
+				if (memoryGate < estimatedBufferSize) memoryGate = estimatedBufferSize;
 			}
 			return result;
 		}
