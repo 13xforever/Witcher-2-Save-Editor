@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using SaveFormat.Dzip;
 using SaveFormat.SaveGame;
 using SaveFormat.SaveGame.Node;
@@ -14,23 +15,39 @@ namespace SimpleLauncher
 	{
 		static void Main(string[] args)
 		{
-			Unpack(@"D:\Games\1C-SoftClub\Ведьмак 2. Убийцы королей\CookedPC\pack0.dzip");
+			if (args.Length != 1)
+			{
+				ShowHelp();
+				return;
+			}
+			if (!File.Exists(args[0]))
+			{
+				Console.WriteLine("'{0}' could not be found.", args[0]);
+				return;
+			}
 
-			//ParseSave(@"D:\Documents\Witcher 2\gamesaves\QuickSave.sav");
-
+			Unpack(args[0]);
 			Console.WriteLine("done");
-			Console.ReadKey();
+		}
+
+		private static void ShowHelp()
+		{
+			var exe = Path.GetFileName(Assembly.GetExecutingAssembly().CodeBase);
+			Console.WriteLine("Usage: {0} \"path_to_file.dzip\"", exe);
+			Console.WriteLine("Or just drag & drop file.dzip unto {0}", exe);
 		}
 
 		private static void Unpack(string filename)
 		{
-			W2Dzip pack;
+			var oldTitle = Console.Title;
 			using (var stream = File.OpenRead(filename))
 			{
-				pack = W2Dzip.Read(stream);
+				Console.Title = "Unpacking " + filename;
+				W2Dzip pack = W2Dzip.Read(stream);
 				var outPath = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename));
 				pack.UnpackAll(stream, outPath);
 			}
+			Console.Title = oldTitle;
 		}
 
 		private static void ParseSave(string filename)
