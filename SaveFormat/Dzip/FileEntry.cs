@@ -8,10 +8,10 @@ namespace SaveFormat.Dzip
 	public class FileEntry
 	{
 		public string filename; //0-terminated
-		public long unknown;
-		public long unknown2;
+		public long unknown; //crc?
+		public long decompressedLength;
 		public long offset;
-		public long length;
+		public long compressedLength;
 
 
 		public static List<FileEntry> Read(Stream stream, int count)
@@ -30,11 +30,11 @@ namespace SaveFormat.Dzip
 				stream.Read(tmp, 0, tmp.Length);
 				entry.unknown = BitConverter.ToInt64(tmp, 0);
 				stream.Read(tmp, 0, tmp.Length);
-				entry.unknown2 = BitConverter.ToInt64(tmp, 0);
+				entry.decompressedLength = BitConverter.ToInt64(tmp, 0);
 				stream.Read(tmp, 0, tmp.Length);
 				entry.offset = BitConverter.ToInt64(tmp, 0);
 				stream.Read(tmp, 0, tmp.Length);
-				entry.length = BitConverter.ToInt64(tmp, 0);
+				entry.compressedLength = BitConverter.ToInt64(tmp, 0);
 				result.Add(entry);
 			}
 			return result;

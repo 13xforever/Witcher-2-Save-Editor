@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace SaveFormat.Dzip
@@ -60,8 +59,10 @@ namespace SaveFormat.Dzip
 					var outDirectory = Path.GetDirectoryName(outFilename);
 					if (!Directory.Exists(outDirectory))
 						Directory.CreateDirectory(outDirectory);
-					using (var outStream = File.OpenWrite(outFilename))
-						stream.CopyTo(outStream, entry.length - localOffset);
+
+					using (var outStream = File.Open(outFilename, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
+						stream.Decompress(outStream, entry.compressedLength - localOffset, entry.decompressedLength);
+
 
 					var c = Console.ForegroundColor;
 					Console.ForegroundColor = ConsoleColor.Green;
