@@ -75,13 +75,12 @@ namespace SaveFormat.Dzip
 					if (!Directory.Exists(outDirectory))
 						Directory.CreateDirectory(outDirectory);
 
-					using (var memStream = new MemoryStream((int)entry.decompressedLength))
-					{
-						stream.Decompress(memStream, entry.compressedLength - localOffset, entry.decompressedLength);
-						memStream.Seek(0, SeekOrigin.Begin);
-						using (var outStream = File.OpenWrite(outFilename))
-							memStream.CopyTo(outStream);
-					}
+					var input = new byte[entry.compressedLength - localOffset];
+					var output = new byte[entry.decompressedLength];
+					stream.FillInBuffer(input);
+					LZF.Decompress(input, input.Length, output, output.Length);
+					using (var outStream = File.OpenWrite(outFilename))
+						outStream.Write(output, 0, output.Length);
 
 					Log.Success("ok");
 				}

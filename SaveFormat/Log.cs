@@ -5,7 +5,7 @@ namespace SaveFormat
 {
 	public static class Log
 	{
-		private static readonly StreamWriter log = new StreamWriter(File.Open(DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss'.log'"), FileMode.CreateNew, FileAccess.Write, FileShare.Read));
+		private static readonly StreamWriter log = new StreamWriter(File.Open(DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss'.log'"), FileMode.CreateNew, FileAccess.Write, FileShare.Read));
 		private static string buffer;
 
 		public static void Write(string message, params object[] args)
